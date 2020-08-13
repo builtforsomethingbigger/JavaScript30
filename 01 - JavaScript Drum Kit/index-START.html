@@ -58,7 +58,22 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
+  window.addEventListener('keydown', function(e){
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"`)
+    const key = document.querySelector(`.key[data-key="${e.keyCode}"`)
+    if(!audio) return //if there is no audio file associated, it will not run the function
+    audio.currentTime = 0 //this will cut the current audio sound and play the new current audio
+    audio.play()
+    key.classList.add('playing')
+  })
 
+  function removeTransition(e) {
+    if(e.propertyName !== 'transform') return
+    this.classList.remove('playing')
+  }
+
+  const keys = document.querySelectorAll('.key')
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition))
 </script>
 
 
